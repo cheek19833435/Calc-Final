@@ -66,9 +66,10 @@ function operate(num1,op,num2){
         clearVars()
         return sol 
     }
-
-
 }
+
+
+
 
 const container = document.querySelector('#container')
 // display
@@ -90,8 +91,6 @@ c.textContent = 'Clear'
 const eq = document.createElement('button')
 eq.textContent = 'Equals'
 
-
-
 // array of operators for loop
 let opArr = [plus,subtract,divi,multi,c,eq]
 // adds operator buttons
@@ -104,16 +103,18 @@ opArr.map(item=>{
         // logic to amend operator for clear button
         if (item.textContent =='Clear'){
             disp.textContent = ''
-           
             // reset num1 and num2 and operator
-            let [op,num1,num2] = clearVars()
-    
+            num1 = ''
+            num2 =''
+            op = undefined
         }
         // amend operator for equals  and execute operatefunction
         if (item.textContent =='Equals'){
             // execute operate function
             operate(num1,op,num2)
-
+            num1 = ''
+            num2 =''
+            op = undefined
         }
     })
     container.append(item)
@@ -125,9 +126,9 @@ for (let x =0;x<10;x++){
     elem.textContent = x
     // add click 
     elem.addEventListener('click',()=>{
-            
         // if op has has a value, then assign num2 (truthy)
         // and displays number within display DIV
+        // concatnates for display
         if (op){
             disp.textContent=""
             num2 = num2.concat(x)
@@ -137,9 +138,6 @@ for (let x =0;x<10;x++){
             disp.textContent = num1
         }
         
-        
-        clearVars()
-    
     })
     container.append(elem)
 }

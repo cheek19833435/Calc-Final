@@ -26,49 +26,38 @@ function mult(a,b){
 // num2 var
 // operator var
 
-function clearVars(){
-    let num1 = ""
-    let num2 = ""
-    let op = undefined
-    return [op,num1,num2]
-}
-
-let [op,num1,num2] = clearVars()
+let num1 = ""
+let num2 = ""
+let op = undefined
+let sol = undefined
 
 function operate(num1,op,num2){
-    console.log(op)
     num1 = Number(num1)
     num2 = Number(num2)
     if (op=='+'){
         let sol = add(num1,num2)
         disp.textContent = sol
-        clearVars()
         return sol
        
     }
     if (op=='-'){
         let sol = minus(num1,num2)
         disp.textContent = sol
-        clearVars()
         return sol 
     }
     if (op=='/'){
         let sol = divide(num1,num2)
         // round 
         sol = sol.toFixed(2)
-        disp.textContent = sol
-        clearVars()
+        disp.textContent = sol 
         return sol 
     }
     if (op=='x'){
         let sol = mult(num1,num2)
         disp.textContent = sol
-        clearVars()
         return sol 
     }
 }
-
-
 
 
 const container = document.querySelector('#container')
@@ -100,6 +89,7 @@ opArr.map(item=>{
         if (item.textContent == '+'|| item.textContent == '-'|| item.textContent == '/' || item.textContent=='x'){
             op = item.textContent
         }
+    
         // logic to amend operator for clear button
         if (item.textContent =='Clear'){
             disp.textContent = ''
@@ -107,14 +97,25 @@ opArr.map(item=>{
             num1 = ''
             num2 =''
             op = undefined
+            sol = undefined
         }
         // amend operator for equals  and execute operatefunction
         if (item.textContent =='Equals'){
-            // execute operate function
-            operate(num1,op,num2)
-            num1 = ''
-            num2 =''
-            op = undefined
+            if (sol){
+                // if operator button is pressed again and is truthy
+                if (op){
+                    sol = operate(sol,op,num2)
+                    sol = undefined
+                }
+            } else {
+                    // execute operate function
+                    sol = operate(num1,op,num2)
+                    // if sol is truthy (operate function has run) and NOT undefined
+                    num1 = ''
+                    num2 =''
+                    op = undefined
+            }   
+            
         }
     })
     container.append(item)
@@ -137,6 +138,7 @@ for (let x =0;x<10;x++){
             num1 = num1.concat(x)
             disp.textContent = num1
         }
+        
         
     })
     container.append(elem)

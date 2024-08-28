@@ -1,19 +1,19 @@
 // add 
-function add(a,b){
-    console.log(a+b)
-    return a+b
+function add(arr){
+    return arr
+        .reduce((first,last)=>first+=last)
 }
 
 // subtract
-function minus(a,b){
-    console.log(a-b)
-    return a-b
-}
+function minus(arr){
+    return arr
+     .reduce((first,last)=>(first-last))
+}  
 
 // divide
-function divide(a,b){
-    console.log(a/b)
-    return a/b
+function divide(arr){
+    return arr
+     .reduce((first,last)=>(last/first))
 }
 
 // multiply
@@ -22,38 +22,61 @@ function mult(a,b){
     return a*b
 }
 
-// num1 var
-// num2 var
-// operator var
-
-let num1 = ""
-let num2 = ""
+// variables
+num1 = undefined
+num2 = undefined
 let op = undefined
 let sol = undefined
+let prevSol = undefined
+let display = ''
+let solArr = []
 
-function operate(num1,op,num2){
-    num1 = Number(num1)
-    num2 = Number(num2)
+function operate(arr,op,prevSol){
+    // loops through each item and converts to Number
+    arr.forEach((item,i)=>{
+        arr[i] = Number(item)
+    })
+    
+    // console.table(arr)
+    console.log(prevSol)
+    // console.log(op)
+    
+    // if prevSol has a truthy value
+    if (prevSol){
+        // add prevSol to solArray
+        arr.push(prevSol)
+        // remove first value in array before going to operations functions
+        // starting at index 0 delete 1 element 
+        // splice will do this in place and affect the original array
+        arr.splice(0,1)
+        // swap array so subtract works
+        let temp = arr[0]
+        arr[0] = arr[1]
+        arr[1] = temp
+        console.table(arr)
+    }
+
     if (op=='+'){
-        let sol = add(num1,num2)
+        let sol = add(arr)
         disp.textContent = sol
         return sol
        
     }
     if (op=='-'){
-        let sol = minus(num1,num2)
+        let sol = minus(arr)
+        // sol = Math.abs(sol)
         disp.textContent = sol
         return sol 
     }
     if (op=='/'){
-        let sol = divide(num1,num2)
+        let sol = divide(arr)
         // round 
         sol = sol.toFixed(2)
         disp.textContent = sol 
         return sol 
     }
     if (op=='x'){
-        let sol = mult(num1,num2)
+        let sol = mult(arr)
         disp.textContent = sol
         return sol 
     }
@@ -88,32 +111,55 @@ opArr.map(item=>{
         disp.textContent=item.textContent
         if (item.textContent == '+'|| item.textContent == '-'|| item.textContent == '/' || item.textContent=='x'){
             op = item.textContent
-        }
+            // if num1 is undefined, store display in num1 else num2
+            if (num1==undefined){
+                num1 = display
+                solArr.push(num1)
+            } else {
+                num2 = display
+                solArr.push(num2)
+            }
+            
+            // clears display
+            display =''
+        } 
     
         // logic to amend operator for clear button
         if (item.textContent =='Clear'){
             disp.textContent = ''
-            // reset num1 and num2 and operator
-            num1 = ''
-            num2 =''
+            display=''
+            // reset solArray
+            solArr = []
             op = undefined
             sol = undefined
+            prevSol = undefined
+            num1 = undefined
+            num2 = undefined
         }
         // amend operator for equals  and execute operatefunction
         if (item.textContent =='Equals'){
             if (sol){
+                // retain solution under variable prev sol
+                prevSol = sol
+                
                 // if operator button is pressed again and is truthy
                 if (op){
-                    sol = operate(sol,op,num2)
-                    sol = undefined
+                    solArr.push(display)
+                    sol = operate(solArr,op,prevSol)
+                    // resets solarr
+                    solArr = []
+                    op = undefined
                 }
             } else {
+                    // get current display value and add to solarr
+                    solArr.push(display)
+                    // console.table(solArr)
                     // execute operate function
-                    sol = operate(num1,op,num2)
-                    // if sol is truthy (operate function has run) and NOT undefined
-                    num1 = ''
-                    num2 =''
+                    sol = operate(solArr,op,prevSol)
+                    // resets solarray and operator
+                    solArr=[]
                     op = undefined
+                    prevSol=undefined
             }   
             
         }
@@ -124,25 +170,37 @@ opArr.map(item=>{
 for (let x =0;x<10;x++){
     // ccreates buttons
     let elem = document.createElement('button')
+    // add digits class to buttons
+    elem.classList.add('digits')
+    // assign number to buttons
     elem.textContent = x
     // add click 
     elem.addEventListener('click',()=>{
-        // if op has has a value, then assign num2 (truthy)
-        // and displays number within display DIV
-        // concatnates for display
-        if (op){
-            disp.textContent=""
-            num2 = num2.concat(x)
-            disp.textContent = num2
-        } else{
-            num1 = num1.concat(x)
-            disp.textContent = num1
-        }
-        
-        
-    })
+            // clears display variable for next input
+            // shows number clicked in display variable
+            display = display.concat(x)
+            disp.textContent = display            
+        })
+    
     container.append(elem)
 }
 
+           
 
 
+
+
+
+        // if op has has a value, then assign num2 (truthy)
+        // and displays number within display DIV
+        // concatnates for display
+        // if (op){
+        //     disp.textContent=""
+        //     num2 = num2.concat(x)
+        //     disp.textContent = num2
+        // } else{
+        //     num1 = num1.concat(x)
+        //     disp.textContent = num1
+        // }
+        
+    

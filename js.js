@@ -7,7 +7,7 @@ function add(arr){
 // subtract
 function minus(arr){
     return arr
-     .reduce((first,last)=>(first-last))
+     .reduce((first,last)=>(first-=last))
 }  
 
 // divide
@@ -26,10 +26,12 @@ function mult(a,b){
 num1 = undefined
 num2 = undefined
 let op = undefined
+let op2 = undefined
 let sol = undefined
 let prevSol = undefined
 let display = ''
 let solArr = []
+
 
 function operate(arr,op,prevSol){
     // loops through each item and converts to Number
@@ -37,12 +39,12 @@ function operate(arr,op,prevSol){
         arr[i] = Number(item)
     })
     
-    // console.table(arr)
-    console.log(prevSol)
-    // console.log(op)
+    console.table(arr)
+    // console.log(prevSol)
+    console.log(op)
     
-    // if prevSol has a truthy value
-    if (prevSol){
+    // if prevSol has a truthy value or == 0
+    if (prevSol||prevSol==0){
         // add prevSol to solArray
         arr.push(prevSol)
         // remove first value in array before going to operations functions
@@ -109,8 +111,16 @@ let opArr = [plus,subtract,divi,multi,c,eq]
 opArr.map(item=>{
     item.addEventListener('click',()=>{
         disp.textContent=item.textContent
-        if (item.textContent == '+'|| item.textContent == '-'|| item.textContent == '/' || item.textContent=='x'){
-            op = item.textContent
+        // || item.textContent =='Equals'
+        if (item.textContent == '+'|| item.textContent == '-'|| item.textContent == '/' || item.textContent=='x' ){
+            // storing operators so it doesn't get overwritten
+            if (op==undefined){
+                op = item.textContent
+                disp.textContent = op
+            } else {
+                op2 =item.textContent
+            }
+                
             // if num1 is undefined, store display in num1 else num2
             if (num1==undefined){
                 num1 = display
@@ -119,26 +129,8 @@ opArr.map(item=>{
                 num2 = display
                 solArr.push(num2)
             }
-            
-            // clears display
-            display =''
-        } 
-    
-        // logic to amend operator for clear button
-        if (item.textContent =='Clear'){
-            disp.textContent = ''
-            display=''
-            // reset solArray
-            solArr = []
-            op = undefined
-            sol = undefined
-            prevSol = undefined
-            num1 = undefined
-            num2 = undefined
-        }
-        // amend operator for equals  and execute operatefunction
-        if (item.textContent =='Equals'){
-            if (sol){
+            // amend operator for equals  and execute operatefunction
+            if (sol||sol ==0){
                 // retain solution under variable prev sol
                 prevSol = sol
                 
@@ -151,18 +143,35 @@ opArr.map(item=>{
                     op = undefined
                 }
             } else {
-                    // get current display value and add to solarr
-                    solArr.push(display)
-                    // console.table(solArr)
-                    // execute operate function
-                    sol = operate(solArr,op,prevSol)
-                    // resets solarray and operator
-                    solArr=[]
-                    op = undefined
-                    prevSol=undefined
-            }   
-            
-        }
+                    // start operate function only when both num1 
+                    // and num2 are filled
+                    if (num1 && num2){
+                        console.log(num1)
+                        console.log(num2)
+                        sol = operate(solArr,op,prevSol)
+                        // resets solarray and operator
+                        solArr=[]
+                        op = undefined
+                        prevSol=undefined
+                    }     
+            }
+            // clears display
+            display =''
+        
+        }    
+        // logic to amend operator for clear button
+        if (item.textContent =='Clear'){
+            disp.textContent = ''
+            display=''
+            // reset solArray
+            solArr = []
+            op = undefined
+            sol = undefined
+            prevSol = undefined
+            num1 = undefined
+            num2 = undefined
+        }  
+        
     })
     container.append(item)
 })

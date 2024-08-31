@@ -187,9 +187,7 @@ opArr.map(item=>{
                     }     
             }
             // clears display
-            display =''
-            
-        
+            display =''  
         }    
         // logic to amend operator for clear button
         if (item.textContent =='Clear'){
@@ -237,8 +235,49 @@ for (let x =0;x<10;x++){
     container.append(elem)
 }
 
+// +/- ; . button; % button
 
+const plusmin = document.createElement('button')
+plusmin.textContent = '+/-'
+const perc = document.createElement('button')
+perc.textContent = '%'
+const dec = document.createElement('button')
+dec.textContent = '.'
 
+let otherOp = [plusmin,perc,dec]
+
+for (let y=0;y<otherOp.length;y++){
+    otherOp[y].addEventListener('click',()=>{
+        // toggle for negative 
+        if(otherOp[y].textContent =='+/-'){
+            // toggles for negative sign
+            let negCount = display.split('-').length -1
+            if (negCount==1){
+                // omits neg sign if already there
+                display = display.slice(1,display.length)
+            } else {
+                display = '-' + display
+            }
+            // reset negCount
+            disp.textContent = display 
+        }
+        // adds decimal point
+        if(otherOp[y].textContent =='.'){
+            // ensures '.' only appears once
+            let decCount = display.split('.').length -1
+            if(decCount<1){
+                display = display.concat('.')
+            }
+            disp.textContent = display 
+        }
+        // %
+        if(otherOp[y].textContent =='%'){
+            display = parseFloat(display/100)
+            disp.textContent = display 
+        }
+    })
+    container.append(otherOp[y])
+}
 
            
 

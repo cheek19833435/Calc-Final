@@ -1,0 +1,77 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    font-family: 'Lora', sans-serif
+}
+
+#container {
+    display: flex;
+    /* all of screen width */
+    width: 100%;
+    /* entire browser window */
+    height: 100vh;
+    border-style: solid;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgb(177, 212, 222);
+}
+
+#calculator{
+    height: 400px;
+    width: 300px;
+    background-color: rgb(136, 143, 192);
+    box-shadow: 10px 5px 5px black;
+    padding: 15px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#display{
+    /* align-items: center;
+    justify-content: center; */
+    text-align: center;
+    text-justify: center;
+    width:250px;
+    height:60px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
+    padding: 15px;
+    margin: 8px;
+    /* rounds edge of border */
+    border-radius: 6px ;
+    font-size: 24px;
+    font-weight: 800;
+    /* cursor:grab; */
+    /* background-color: transparent; */
+}
+
+#calculator #display  {
+    /* width:100%; */
+    /* rounds edge of border */
+    border-radius: 6px ;
+    font-size: 24px;
+    font-weight: 800;
+    /* inset embossed  */
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset; */
+    /* margin-bottom: 12px; */
+    /* sets mouse pointer to grab hand */
+    cursor:grab;
+    background-color: transparent;
+}
+
+/* .digits{
+    cursor: grab;
+} */
+
+button{
+    width: 50px;
+    height: 45px;
+    border-radius: 13px;
+    box-shadow: 0px 2px 10px rebeccapurple inset;
+    cursor: grab;
+    margin: 8px;
+    justify-content: center;
+    align-self: center;
+}

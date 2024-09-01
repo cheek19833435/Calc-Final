@@ -91,9 +91,13 @@ function operate(arr,op,prevSol){
 
 
 const container = document.querySelector('#container')
+const calculator = document.createElement('div')
+calculator.id = 'calculator'
 // display
 const disp = document.createElement('div')
-container.append(disp)
+disp.id = 'display'
+calculator.append(disp)
+// container.append(disp)
 
 // operator buttons
 const plus = document.createElement('button')
@@ -114,6 +118,7 @@ eq.textContent = 'Equals'
 let opArr = [plus,subtract,divi,multi,c,eq]
 // adds operator buttons
 opArr.map(item=>{
+    item.classList.add('Operators')
     item.addEventListener('click',()=>{
         disp.textContent=item.textContent
         if (item.textContent == '+'|| item.textContent == '-'|| item.textContent == '/' 
@@ -214,7 +219,7 @@ opArr.map(item=>{
         }
 
     })
-    container.append(item)
+    calculator.append(item)
 })
 // adds number buttons and even listeners fo each one
 for (let x =0;x<10;x++){
@@ -232,7 +237,7 @@ for (let x =0;x<10;x++){
             disp.textContent = display            
         })
     
-    container.append(elem)
+    calculator.append(elem)
 }
 
 // +/- ; . button; % button
@@ -247,6 +252,8 @@ dec.textContent = '.'
 let otherOp = [plusmin,perc,dec]
 
 for (let y=0;y<otherOp.length;y++){
+    // add to class
+    otherOp[y].classList.add('OtherOps')
     otherOp[y].addEventListener('click',()=>{
         // toggle for negative 
         if(otherOp[y].textContent =='+/-'){
@@ -276,9 +283,9 @@ for (let y=0;y<otherOp.length;y++){
             disp.textContent = display 
         }
     })
-    container.append(otherOp[y])
+    calculator.append(otherOp[y])
 }
-
+container.append(calculator)
            
-
+// moving buttons to correct spot
 

@@ -198,7 +198,7 @@ opArr.map(item=>{
         }    
         // logic to amend operator for clear button
         if (item.textContent =='Clear'){
-            disp.textContent = ''
+            disp.textContent = 0
             display=''
             // reset solArray
             solArr = []
@@ -285,8 +285,9 @@ for (let y=0;y<otherOp.length;y++){
         }
         // %
         if(otherOp[y].textContent =='%'){
-            display = parseFloat(display/100)
-            disp.textContent = display 
+            display = parseFloat(disp.textContent/100)
+            disp.textContent = display
+            // solArr.push(display) 
         }
     })
     calculator.append(otherOp[y])
@@ -313,3 +314,4 @@ calculator.insertBefore(dec,eq)
 calculator.insertBefore(document.getElementById('zero'),dec)
 
 document.title = 'PurpleCalc!'
+disp.textContent = 0

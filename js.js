@@ -118,7 +118,9 @@ eq.textContent = 'Equals'
 let opArr = [plus,subtract,divi,multi,c,eq]
 // adds operator buttons
 opArr.map(item=>{
-    item.classList.add('Operators')
+    if (item.textContent != 'Equals'){
+        item.classList.add('operators')
+    }
     item.addEventListener('click',()=>{
         disp.textContent=item.textContent
         if (item.textContent == '+'|| item.textContent == '-'|| item.textContent == '/' 
@@ -225,8 +227,12 @@ opArr.map(item=>{
 for (let x =0;x<10;x++){
     // ccreates buttons
     let elem = document.createElement('button')
-    // add digits class to buttons
-    elem.classList.add('digits')
+    // add gives id and classes to number buttons
+    if (x==0){
+        elem.id = 'zero'
+    }else{
+        elem.id = `digit-${x}`
+    }
     // assign number to buttons
     elem.textContent = x
     // add click 
@@ -253,7 +259,7 @@ let otherOp = [plusmin,perc,dec]
 
 for (let y=0;y<otherOp.length;y++){
     // add to class
-    otherOp[y].classList.add('OtherOps')
+    otherOp[y].id = `op${y}`
     otherOp[y].addEventListener('click',()=>{
         // toggle for negative 
         if(otherOp[y].textContent =='+/-'){
@@ -273,7 +279,7 @@ for (let y=0;y<otherOp.length;y++){
             // ensures '.' only appears once
             let decCount = display.split('.').length -1
             if(decCount<1){
-                display = display.concat('.')
+                display = display.concat('0.')
             }
             disp.textContent = display 
         }
@@ -288,4 +294,22 @@ for (let y=0;y<otherOp.length;y++){
 container.append(calculator)
            
 // moving buttons to correct spot
+calculator.insertBefore(c,plus)
+calculator.insertBefore(perc,plus)
+calculator.insertBefore(plusmin,plus)
+calculator.insertBefore(divi,plus)
+// users get element by id= with insert before
+calculator.insertBefore(document.getElementById('digit-7'),plus)
+calculator.insertBefore(document.getElementById('digit-8'),plus)
+calculator.insertBefore(document.getElementById('digit-9'),plus)
+calculator.insertBefore(multi,plus)
+calculator.insertBefore(document.getElementById('digit-6'),plus)
+calculator.insertBefore(document.getElementById('digit-5'),plus)
+calculator.insertBefore(document.getElementById('digit-4'),plus)
+calculator.insertBefore(document.getElementById('digit-3'),subtract)
+calculator.insertBefore(document.getElementById('digit-2'),subtract)
+calculator.insertBefore(document.getElementById('digit-1'),subtract)
+calculator.insertBefore(dec,eq)
+calculator.insertBefore(document.getElementById('zero'),dec)
 
+document.title = 'PurpleCalc!'

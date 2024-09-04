@@ -60,13 +60,12 @@
     background-color: transparent;
 }
 
-.operators,
-#op1,
-#op0{
+.operators{
     background-color: lightskyblue
 }
  
-#zero{
+#zero,
+#clear{
     width:115px
 }
 

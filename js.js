@@ -39,12 +39,13 @@ function operate(arr,op,prevSol){
         arr[i] = Number(item)
         // console.log(item)
     })
-
+    
     // if prevSol has a truthy value or == 0
     if (prevSol||prevSol==0){
         // add prevSol to solArray as a number
         arr.push(Number(prevSol))
-            // only splices if more than 2 items in array
+        // console.table(arr)
+        // only splices if more than 2 items in array
         if (arr.length>2){
             // remove first value in array before going to operations functions
             // starting at index 0 delete 1 element 
@@ -118,8 +119,11 @@ eq.textContent = 'Equals'
 let opArr = [plus,subtract,divi,multi,c,eq]
 // adds operator buttons
 opArr.map(item=>{
-    if (item.textContent != 'Equals'){
+    if (item.textContent != 'Equals'&& item.textContent!='Clear'){
         item.classList.add('operators')
+    }
+    if (item.textContent=='Clear'){
+        item.id='clear'
     }
     item.addEventListener('click',()=>{
         disp.textContent=item.textContent
@@ -135,16 +139,24 @@ opArr.map(item=>{
             if (disp.textContent=='Infinity'){
                 disp.textContent = 'ERR'
             }
-            
                 
             // if num1 is undefined, store display in num1 else num2
             if (num1==undefined && display !=''){
                 num1 = display
                 solArr.push(num1)
+                console.table(num1)
             } else if (num1 && display !='') {
                 num2 = display
                 solArr.push(num2)
+                console.table(num2)
+                // if neg number is returned
+                if (num2<0){
+                // make num1 undefined 
+                num1 = undefined
+                sol = undefined
             }
+            }
+            
             // amend operator for equals  and execute operatefunction
             if (sol||sol ==0){
                 // retain solution under variable prev sol
@@ -152,13 +164,13 @@ opArr.map(item=>{
                 
                 // if operator button is pressed again and is truthy
                 if (op && display !=""){
-                    // if display = '' push 0 
+                
                     solArr.push(display)
-                    // console.table(solArr)
+
                     sol = operate(solArr,op,prevSol)
+                    
                     if (sol=='Infinity'){
                         disp.textContent = 'ERR'
-                        sol = undefined
                         sol = undefined
                         solArr = []
                         op = undefined
@@ -248,14 +260,14 @@ for (let x =0;x<10;x++){
 
 // +/- ; . button; % button
 
-const plusmin = document.createElement('button')
-plusmin.textContent = '+/-'
+// const plusmin = document.createElement('button')
+// plusmin.textContent = '+/-'
 const perc = document.createElement('button')
 perc.textContent = '%'
 const dec = document.createElement('button')
 dec.textContent = '.'
 
-let otherOp = [plusmin,perc,dec]
+let otherOp = [perc,dec]
 
 for (let y=0;y<otherOp.length;y++){
     // add to class
@@ -263,23 +275,25 @@ for (let y=0;y<otherOp.length;y++){
     otherOp[y].addEventListener('click',()=>{
         // toggle for negative 
         if(otherOp[y].textContent =='+/-'){
+            display = disp.textContent
             // toggles for negative sign
             let negCount = display.split('-').length -1
-            if (negCount==1){
-                // omits neg sign if already there
-                display = display.slice(1,display.length)
-            } else {
-                display = '-' + display
+            if (display!='0'){
+                if (negCount==1){
+                    // omits neg sign if already there
+                    display = display.slice(1,display.length)
+                } else {
+                    display = '-' + display
+                }
+                disp.textContent = display
             }
-            // reset negCount
-            disp.textContent = display 
         }
         // adds decimal point
         if(otherOp[y].textContent =='.'){
             // ensures '.' only appears once
             let decCount = display.split('.').length -1
             if(decCount<1){
-                display = display.concat('0.')
+                display = display.concat('.')
             }
             disp.textContent = display 
         }
@@ -297,7 +311,7 @@ container.append(calculator)
 // moving buttons to correct spot
 calculator.insertBefore(c,plus)
 calculator.insertBefore(perc,plus)
-calculator.insertBefore(plusmin,plus)
+// calculator.insertBefore(plusmin,plus)
 calculator.insertBefore(divi,plus)
 // users get element by id= with insert before
 calculator.insertBefore(document.getElementById('digit-7'),plus)

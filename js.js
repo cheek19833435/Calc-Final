@@ -274,20 +274,20 @@ for (let y=0;y<otherOp.length;y++){
     otherOp[y].id = `op${y}`
     otherOp[y].addEventListener('click',()=>{
         // toggle for negative 
-        if(otherOp[y].textContent =='+/-'){
-            display = disp.textContent
-            // toggles for negative sign
-            let negCount = display.split('-').length -1
-            if (display!='0'){
-                if (negCount==1){
-                    // omits neg sign if already there
-                    display = display.slice(1,display.length)
-                } else {
-                    display = '-' + display
-                }
-                disp.textContent = display
-            }
-        }
+        // if(otherOp[y].textContent =='+/-'){
+        //     display = disp.textContent
+        //     // toggles for negative sign
+        //     let negCount = display.split('-').length -1
+        //     if (display!='0'){
+        //         if (negCount==1){
+        //             // omits neg sign if already there
+        //             display = display.slice(1,display.length)
+        //         } else {
+        //             display = '-' + display
+        //         }
+        //         disp.textContent = display
+        //     }
+        // }
         // adds decimal point
         if(otherOp[y].textContent =='.'){
             // ensures '.' only appears once
@@ -295,6 +295,10 @@ for (let y=0;y<otherOp.length;y++){
             if(decCount<1){
                 display = display.concat('.')
             }
+            // if starts with . then add a 0 before the .
+            if (display.startsWith('.')){
+                display = '0' + display.slice(0) + display.slice(1,display.length)
+            } 
             disp.textContent = display 
         }
         // %
